@@ -1,0 +1,247 @@
+﻿<html>
+<head runat="server">
+        <title>Tutor</title>
+        <meta charset="UTF-8">
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+
+        <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+        <link href="../Content/styles.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <style>
+        /* Add this style to position the selected item text */
+        .selected_item_text {
+            text-align: center;
+            margin-top: 10px;
+            display: none; /* Hide initially */
+        }
+        
+        /* Add this style for the containers */
+       .container {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px; /* Space between containers */
+    margin-top: 20px;
+     
+ 
+}
+      
+.info-box {
+    width: 750px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px; /* Curved edges */
+}
+.student-table{
+    margin-top:40px;
+
+}
+
+.clickable {
+    cursor: pointer; /* Show hand cursor on hover */
+}
+
+<style>
+    .student-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        display: none; /* Hide initially */
+    }
+
+    .student-table th, .student-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .student-table th {
+        background-color: #f2f2f2;
+    }
+
+    .student-table tfoot td {
+        font-weight: bold;
+    }
+</style>
+
+    </style>
+          <script>
+              $(document).ready(function () {
+                  $(".siderbar_menu li").click(function () {
+                      $(this).toggleClass("active");
+                  });
+
+                  $(".hamburger").click(function () {
+                      $(".wrapper").addClass("active");
+                  });
+
+                  $(".close, .bg_shadow").click(function () {
+                      $(".wrapper").removeClass("active");
+                  });
+
+                  $(".accordion li a").click(function (e) {
+                      e.preventDefault();
+                      var selectedItem = $(this).text();
+                      $("#selectedItemText").text("Selected Tutor: " + selectedItem);
+                      $(".selected_item_text").show(); // Show the Selected Item text
+                      $(".container").show(); // Show the containers
+                  });
+              });
+          </script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="wrapper">
+            <div class="sidebar">
+                <div class="bg_shadow"></div>
+                <div class="sidebar_inner">
+                    <div class="close">
+                        <i class="fas fa-times"></i>
+                    </div>
+
+                    <div class="profile_info">
+                        
+                       
+                        <div class="profile_data">
+                            <p class="name">Tutor</p>
+                            <span><i class="fas fa-map-marker-alt"></i>Kovilpatti, India</span>
+                        </div>
+                    </div>
+
+                    <ul class="siderbar_menu" style="position: relative;">
+                        <li>
+                            <a href="#">
+                                <div class="icon"><i class="fas fa-hotel"></i></div>
+                                <div class="title">End Semester</div>
+                                <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+                            </a>
+                            <ul class="accordion">
+                                <li><a href="#"><i class="fas fa-user pr-1"></i>Gowthami</a></li>
+                                <li><a href="#"><i class="fas fa-user pr-1"></i>Ramya</a></li>
+                                <li><a href="#"><i class="fas fa-user pr-1"></i>Madhu</a></li>
+                                <li><a href="#"><i class="fas fa-user pr-1"></i>suguna</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="logout_btn">
+                        <asp:LinkButton ID="btnLogOut" runat="server" CausesValidation="false">Logout</asp:LinkButton>
+                    </div>
+
+                </div>
+            </div>
+            <div class="main_container">
+                <div class="navbar">
+                    <div class="hamburger">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="logo">
+                        <a href="#">NEC</a>
+                    </div>
+                </div>
+                  <div id="selectedItemText" class="selected_item_text">Selected Tutor: </div>
+                
+                <!-- Add four containers with text -->
+                <div class="container">
+    <a href="#" class="info-box clickable" id="studentInfoLink">
+        Student CGPA & GPA
+    </a>
+    <a href="#" class="info-box clickable">
+        All cleared Students list
+    </a>
+    <a href="#" class="info-box clickable">
+        Standby Arrear Students List
+    </a>
+    <a href="#" class="info-box clickable">
+        History Of Arrears
+    </a>
+    <table class="student-table" id="studentTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Student Reg No</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Student rows will be added dynamically using JavaScript -->
+        </tbody>
+        
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var studentInfoLink = document.getElementById("studentInfoLink");
+            var studentTable = document.getElementById("studentTable");
+
+            studentInfoLink.addEventListener("click", function () {
+                // Toggle the visibility of the studentTable
+                studentTable.style.display = (studentTable.style.display === "none") ? "block" : "none";
+            });
+        });
+
+        document.getElementById("studentInfoLink").addEventListener("click", function () {
+            var students = [
+                { name: "Raghava Moorthy R", regNo: "2115002" },
+                { name: "Ganesh Ram M", regNo: "2115003" },
+                { name: "Albert Jebastin A", regNo: "2115008" },
+                { name: "Aravinth M M", regNo: "2115013" },
+                { name: "Ganesh Ram R", regNo: "2115017" },
+                { name: "Premarasu S K", regNo: "2115019" },
+                { name: "Kishore C", regNo: "2115022" },
+                { name: "Sathish Kumar G", regNo: "2115023" },
+                { name: "Inisha Sallove R", regNo: "2115026" },
+                { name: "Jeffry Joshuva Amalan J", regNo: "2115027" },
+                { name: "Kausalya P", regNo: "2115029" },
+                { name: "Narayanan M", regNo: "2115036" },
+                { name: "Nivetha T", regNo: "2115037" },
+                { name: "Ruthra Varshini S", regNo: "2115040" },
+                { name: "Suriyagayathiri B", regNo: "2115046" },
+                { name: "Siva S", regNo: "2115052" },
+                { name: "Soundharrajan J", regNo: "2115055" },
+                { name: "Renuka Sre V", regNo: "2115056" },
+                { name: "Dharamara V M", regNo: "2115405 " },
+                // Add more student objects...
+            ];
+
+
+            // Clear existing table rows
+            var studentTableBody = document.querySelector("#studentTable tbody");
+            studentTableBody.innerHTML = "";
+
+            // Populate table with student data and calculate GPA
+            students.forEach(function (student) {
+
+
+
+
+                // Append row to table
+                var row = "<tr>" +
+                    "<td>" + student.name + "</td>" +
+                    "<td>" + student.regNo + "</td>" +
+
+                    "</tr>";
+                studentTableBody.innerHTML += row;
+            });
+
+            // Calculate and display GPA and CGPA
+
+        });
+
+    </script>
+</div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>
